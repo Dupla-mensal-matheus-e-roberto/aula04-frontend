@@ -18,6 +18,7 @@ export class LivroService {
   }
 
   save(livro: Livro): Observable<Livro> {
+    livro.id=100000
     return this.http.post<Livro>(this.API, livro);
   }
 
