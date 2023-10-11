@@ -14,6 +14,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { CarroslistComponent } from './components/carros/carroslist/carroslist.component';
 import { CarrosdetailsComponent } from './components/carros/carrosdetails/carrosdetails.component';
+import { LivroslistComponent } from './components/livros/livroslist/livroslist.component';
+import { LivrosdetailsComponent } from './components/livros/livrosdetails/livrosdetails.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { CarrosdetailsComponent } from './components/carros/carrosdetails/carros
     IndexComponent,
     LoginComponent,
     CarroslistComponent,
-    CarrosdetailsComponent
+    CarrosdetailsComponent,
+    LivroslistComponent,
+    LivrosdetailsComponent
   ],
   imports: [
     BrowserModule,
