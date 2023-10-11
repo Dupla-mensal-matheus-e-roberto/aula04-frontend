@@ -21,16 +21,24 @@ export class CarroService {
     return this.http.post<Carro>(this.API, carro);
   }
 
-  update(pessoa: Carro, id: number) : Observable<Carro> {
-    return this.http.put<Carro>(this.API, pessoa);
+  update(carro: Carro) : Observable<Carro> {
+    return this.http.put<Carro>(`${this.API}/${carro.id}`, carro);
   }
 
-  delete(id: number) : any {
-    return this.http.delete<string>(this.API);
+  delete(id: number) : Observable<Carro> {
+    return this.http.delete<Carro>(`${this.API}/${id}`);
   }
 
   exemploErro(): Observable<Carro[]> {
     return this.http.get<Carro[]>(this.API + '/erro');
+  }
+
+  verify(carro: Carro){
+    if(carro.id){
+      return this.update(carro);
+    } else {
+      return this.save(carro);
+    }
   }
 
 }

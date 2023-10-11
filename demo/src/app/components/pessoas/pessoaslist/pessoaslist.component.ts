@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Pessoa } from 'src/app/models/pessoa';
 import { PessoaService } from 'src/app/services/pessoa.service';
@@ -9,6 +9,8 @@ import { PessoaService } from 'src/app/services/pessoa.service';
   styleUrls: ['./pessoaslist.component.scss']
 })
 export class PessoaslistComponent {
+
+  retorno = new EventEmitter<Pessoa>();
 
   lista: Pessoa[] = [];
 
@@ -68,8 +70,17 @@ export class PessoaslistComponent {
     this.modalService.open(modal, { size: 'sm' });
   }
 
-  deletar(indice: number){
-    this.pessoaService.delete(indice)
+  deletar(pessoa: Pessoa){
+    this.pessoaService.delete(pessoa.id).subscribe({
+      next: pessoa =>{
+        this.lista = this.lista.filter(p => p.id !== pessoa.id);
+        this.retorno.emit(pessoa);
+      },
+      error: erro =>{
+        alert("Erro, olhar no console");
+        console.log(erro)
+      }
+    });
   }
 
   addOuEditarPessoa(pessoa: Pessoa) {

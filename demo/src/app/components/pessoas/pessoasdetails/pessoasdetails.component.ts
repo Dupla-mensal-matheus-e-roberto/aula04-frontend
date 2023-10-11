@@ -33,6 +33,16 @@ export class PessoasdetailsComponent {
     });
   }
 
-  
+  editar(){
+    this.pessoaService.verify(this.pessoa).subscribe({
+      next: pessoa =>{
+        this.retorno.emit(pessoa);
+      },
+      error: erro =>{
+        alert("Errro, olhar no console");
+        console.log(erro)
+      }
+    })
+  }
 
 }

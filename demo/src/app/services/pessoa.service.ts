@@ -18,46 +18,28 @@ export class PessoaService {
     return this.http.get<Pessoa[]>(this.API);
   }
 
-  save(pessoa: Pessoa): Observable<Pessoa> {
+  save(pessoa: Pessoa) : Observable<Pessoa> {
     return this.http.post<Pessoa>(this.API, pessoa);
   }
 
-  update(pessoa: Pessoa, id: number) : Observable<Pessoa> {
-    return this.http.put<Pessoa>(this.API, pessoa);
+  update(pessoa: Pessoa) : Observable<Pessoa> {
+    return this.http.put<Pessoa>(`${this.API}/${pessoa.id}`, pessoa);
   }
 
-  delete(id: number) : any {
-    return this.http.delete<string>(this.API);
+  delete(id: number) : Observable<Pessoa> {
+    return this.http.delete<Pessoa>(`${this.API}/${id}`);
   }
 
   exemploErro(): Observable<Pessoa[]> {
     return this.http.get<Pessoa[]>(this.API + '/erro');
   }
 
-
-
-  /*
-  CASO PRECISE ENVIAR REQUEST PARAMS, BASTA DECLARAR ASSIM E INCLUIR NA REQUISIÇÃO HTTP
-
-  let params = new HttpParams()
-      .set('empresaId', empresaId.toString())
-
-  return this.http.get<Pessoa[]>(this.API, { params: params});
-
-  
-  
-  SE PRECISAR COLOCAR COISAS NO HEADER DA REQUISIÇÃO
-
-
-      let headers = new HttpHeaders()
-      .set("Content-Type", "application/json");
-
-
-        return this.http.get<Pessoa[]>(this.API, { headers: headers});
-
-
-
-  */
-
+  verify(pessoa: Pessoa){
+    if (pessoa.id) {
+      return this.update(pessoa);
+    } else {
+      return this.save(pessoa);
+    }
+  }
 
 }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Carro } from 'src/app/models/carro';
 import { CarroService } from 'src/app/services/carro.service';
@@ -9,6 +9,8 @@ import { CarroService } from 'src/app/services/carro.service';
   styleUrls: ['./carroslist.component.scss']
 })
 export class CarroslistComponent {
+
+  retorno = new EventEmitter<Carro>();
 
   lista: Carro[] = [];
 
@@ -63,8 +65,17 @@ export class CarroslistComponent {
     this.modalService.open(modal, { size: 'sm'});
   }
 
-  deletar(indice: number){
-    this.carroService.delete(indice)
+  deletar(carro: Carro){
+    this.carroService.delete(carro.id).subscribe({
+      next: carro =>{
+        this.lista = this.lista.filter(c => c.id !== carro.id);
+        this.retorno.emit(carro);
+      },
+      error: erro =>{
+        alert("Erro, olhar no console");
+        console.log(erro);
+      }
+    });
   }
 
   addOuEditarCarro(carro: Carro) {

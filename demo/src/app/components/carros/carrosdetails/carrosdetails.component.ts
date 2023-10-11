@@ -30,4 +30,17 @@ export class CarrosdetailsComponent {
     });
   }
 
+  editar(){
+    this.carroService.verify(this.carro).subscribe({
+      next: carro =>{
+        this.retorno.emit(carro);
+      },
+      error: erro =>{
+        alert("Errro, olhar no console");
+        console.log(erro)
+      }
+    })
+  }
+
+
 }
